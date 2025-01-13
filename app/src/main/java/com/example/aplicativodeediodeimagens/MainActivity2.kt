@@ -8,10 +8,11 @@ import androidx.core.view.WindowInsetsCompat
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.aplicativodeediodeimagens.databinding.ActivityMainBinding
 
-class MainActivity2 : AppCompatActivity() {
+class MainActivity2 : ComponentActivity() {
     private lateinit var binding: ActivityMainBinding
     private val PICK_IMAGE = 100
 
