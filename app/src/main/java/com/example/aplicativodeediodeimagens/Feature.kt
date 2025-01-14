@@ -1,10 +1,11 @@
 package com.example.aplicativodeediodeimagens
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aplicativodeediodeimagens.databinding.ActivityFeatureBinding
 
-class FeatureActivity : AppCompatActivity() {
+class FeatureActivity : ComponentActivity() {
     private lateinit var binding: ActivityFeatureBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
