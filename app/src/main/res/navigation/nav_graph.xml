@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/mainFragment"
+    android:id="@+id/nav_graph">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.aplicativodeediodeimagens.fragments.MainFragment"
+        android:label="@string/label_main_fragment">
+
+        <!-- Ação para navegar ao FeatureFragment -->
+        <action
+            android:id="@+id/action_mainFragment_to_featureFragment"
+            app:destination="@id/featureFragment" />
+
+        <!-- Ação para navegar ao CropFragment -->
+        <action
+            android:id="@+id/action_mainFragment_to_cropFragment"
+            app:destination="@id/cropFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/featureFragment"
+        android:name="com.example.aplicativodeediodeimagens.fragments.FeatureFragment"
+        android:label="@string/label_feature_fragment">
+
+        <!-- Argumento do tipo String para identificar o recurso -->
+        <argument
+            android:name="feature"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cropFragment"
+        android:name="com.example.aplicativodeediodeimagens.fragments.CropFragment"
+        android:label="Crop Image"
+        tools:layout="@layout/fragment_crop">
+
+        <!-- Argumento para passar a imagem como Bitmap -->
+        <argument
+            android:name="image"
+            app:argType="android.graphics.Bitmap" />
+    </fragment>
+
+</navigation>

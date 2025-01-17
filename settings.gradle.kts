@@ -19,5 +19,16 @@ dependencyResolutionManagement {
     }
 }
 
+plugins {
+    id("com.gradle.enterprise") version("3.12.2")
+}
+
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+    }
+}
+
 rootProject.name = "Aplicativo de Edição de Imagens"
 include(":app")
