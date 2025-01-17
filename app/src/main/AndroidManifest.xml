@@ -24,10 +24,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".FeatureActivity"
-            android:exported="false" />
-
         <!--
         <activity
             android:name=".MainActivity"

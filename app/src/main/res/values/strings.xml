@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Aplicativo de Edição de Imagens</string>
+        <string name="app_name">Aplicativo de Edição de Imagens</string>
+        <string name="label_main_fragment">Main Fragment</string>
+        <string name="label_feature_fragment">Feature Fragment</string>
 </resources>
