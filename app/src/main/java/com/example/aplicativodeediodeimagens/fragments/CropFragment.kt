@@ -21,10 +21,10 @@ class CropFragment : Fragment() {
     private var _binding: FragmentCropBinding? = null
     private val binding get() = _binding!!
 
-    // ViewModel do fragmento
+    // Fragment's ViewModel
     private val viewModel: CropViewModel by viewModels()
 
-    // Recupera os argumentos passados na navegação
+    // Returns the args sent in navigation
     private val args: CropFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -38,24 +38,24 @@ class CropFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Configura o observer para atualizar o CropImageView sempre que a imagem mudar no ViewModel
+        // Configures the Observer to update the CropImageView when the image changes on ViewModel
         viewModel.image.observe(viewLifecycleOwner, Observer { bitmap: Bitmap? ->
             bitmap?.let {
                 binding.cropImageView.setImageBitmap(it)
             }
         })
 
-        // Atualiza o ViewModel com a imagem recebida como argumento
+        // Updates the ViewModel with the received image as an argument
         args.image?.let {
             viewModel.changeImage(it)
         }
 
-        // Configura o botão SAVE
+        // Enabling the Save Button
         binding.buttonSave.setOnClickListener {
             saveCroppedImage()
         }
 
-        // Configura o botão ROTATE
+        // Enabling the Rotate Button
         binding.buttonRotate.setOnClickListener {
             rotateCropImage()
         }
@@ -63,31 +63,31 @@ class CropFragment : Fragment() {
 
     private fun rotateCropImage() {
         try {
-            binding.cropImageView.rotateImage(90) // Rotaciona a imagem em 90 graus
+            binding.cropImageView.rotateImage(90) // Rotate the image in 90°
         } catch (e: Exception) {
-            Toast.makeText(requireContext(), "Erro ao rotacionar a imagem", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Error in Rotation", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun saveCroppedImage() {
-        // Obtém o bitmap recortado da CropImageView
+        // Obtain the bitmap cropped from CropImageView
         val croppedBitmap: Bitmap? = binding.cropImageView.croppedImage
 
-        // Atualiza o LiveData do ViewModel
+        // Update the LiveData in ViewModel
         croppedBitmap?.let { viewModel.changeImage(it) }
 
-        // Define o bitmap recortado como resultado para o MainFragment
+        // Defines the cropped bitmap as result for the MainFragment
         val result = Bundle().apply {
             putParcelable("croppedImage", croppedBitmap)
         }
         setFragmentResult("cropResult", result)
 
-        // Fecha o fragmento
+        // Closes the Fragment
         activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Libera a referência do binding para evitar vazamento de memória
+        _binding = null // Frees the reference
     }
 }

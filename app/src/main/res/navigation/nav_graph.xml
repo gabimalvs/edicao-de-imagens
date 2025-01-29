@@ -10,15 +10,16 @@
         android:name="com.example.aplicativodeediodeimagens.fragments.MainFragment"
         android:label="@string/label_main_fragment">
 
-        <!-- Ação para navegar ao FeatureFragment -->
         <action
             android:id="@+id/action_mainFragment_to_featureFragment"
             app:destination="@id/featureFragment" />
 
-        <!-- Ação para navegar ao CropFragment -->
         <action
             android:id="@+id/action_mainFragment_to_cropFragment"
             app:destination="@id/cropFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_lightFragment"
+            app:destination="@id/lightFragment" />
     </fragment>
 
     <fragment
@@ -26,7 +27,6 @@
         android:name="com.example.aplicativodeediodeimagens.fragments.FeatureFragment"
         android:label="@string/label_feature_fragment">
 
-        <!-- Argumento do tipo String para identificar o recurso -->
         <argument
             android:name="feature"
             app:argType="string" />
@@ -38,10 +38,20 @@
         android:label="Crop Image"
         tools:layout="@layout/fragment_crop">
 
-        <!-- Argumento para passar a imagem como Bitmap -->
         <argument
             android:name="image"
             app:argType="android.graphics.Bitmap" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/lightFragment"
+        android:name="com.example.aplicativodeediodeimagens.fragments.LightFragment"
+        android:label="Adjust Light">
+
+        <argument
+            android:name="image"
+            app:argType="android.graphics.Bitmap"/>
+
     </fragment>
 
 </navigation>

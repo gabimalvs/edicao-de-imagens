@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.MainFragment">
 
-    <!-- Botão para carregar a imagem -->
     <Button
         android:id="@+id/button_load"
         android:layout_width="wrap_content"
@@ -14,49 +13,43 @@
         android:layout_marginTop="50dp"
         android:text="LOAD" />
 
-    <!-- Botão para cortar a imagem -->
     <Button
         android:id="@+id/button_crop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="680dp"
         android:text="CROP" />
 
-    <!-- Botão para ajuste de luminosidade -->
     <Button
         android:id="@+id/button_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="120dp"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="680dp"
         android:text="LIGHT" />
 
-    <!-- Botão para ajuste de cores -->
     <Button
         android:id="@+id/button_colors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="600dp"
+        android:layout_marginLeft="215dp"
+        android:layout_marginTop="680dp"
         android:text="COLORS" />
 
-    <!-- Botão para aplicar filtros -->
     <Button
         android:id="@+id/button_filters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="600dp"
-        android:layout_marginLeft="300dp"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="680dp"
         android:text="FILTERS" />
 
-    <!-- Imagem carregada -->
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
         tools:srcCompat="@tools:sample/avatars" />
 
 </FrameLayout>

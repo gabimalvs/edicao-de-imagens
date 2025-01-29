@@ -11,15 +11,15 @@ import com.example.aplicativodeediodeimagens.databinding.FragmentFeatureBinding
 class FeatureFragment : Fragment() {
 
     private lateinit var binding: FragmentFeatureBinding
-    private var featureName: String = "Feature Default" // Variável global para armazenar o argumento
+    private var featureName: String = "Feature Default"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Recuperar o argumento "feature" passado via Safe Args
+        // Acess the argument sent by Safe Args
         arguments?.let {
             val args = FeatureFragmentArgs.fromBundle(it)
-            featureName = args.feature // Salvar o valor do argumento na variável global
+            featureName = args.feature // Saves the argument in the Global Variable
         }
     }
 
@@ -34,8 +34,8 @@ class FeatureFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Atualizar o TextView com o valor do argumento "feature"
-        binding.textViewFeature.text = featureName ?: "Valor não fornecido"
+        // Update the TextView with args "feature" value
+        binding.textViewFeature.text = featureName ?: "No value input"
     }
 
 }

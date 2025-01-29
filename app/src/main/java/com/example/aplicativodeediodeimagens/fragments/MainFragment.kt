@@ -17,11 +17,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.aplicativodeediodeimagens.R
 import com.example.aplicativodeediodeimagens.databinding.FragmentMainBinding
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.aplicativodeediodeimagens.viewmodel.MainViewModel
 
 class MainFragment : Fragment(R.layout.fragment_main) {
     private lateinit var binding: FragmentMainBinding
 
-    // Instancia o MainViewModel
+    // Instances the MainViewModel
     private val viewModel: MainViewModel by viewModels()
 
     private val pickImageLauncher = registerForActivityResult(
@@ -29,18 +30,18 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     ) { uri ->
         uri?.let {
             val bitmap = uriToBitmap(it)
-            viewModel.changeImage(bitmap) // Atualiza a imagem no ViewModel
+            viewModel.changeImage(bitmap) // Updates the image in ViewModel
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Configura o Fragment Result Listener
+        // Fragment Result Listener
         parentFragmentManager.setFragmentResultListener("cropResult", this) { _, bundle ->
             val bitmap = bundle.getParcelable<Bitmap>("croppedImage")
             if (bitmap != null) {
-                viewModel.changeImage(bitmap) // Atualiza o ViewModel com a imagem recortada
+                viewModel.changeImage(bitmap) // Receives the new (cropped) image
             }
         }
     }
@@ -56,25 +57,29 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Observa mudanças no LiveData do ViewModel
+        // Observe
         viewModel.image.observe(viewLifecycleOwner) { bitmap: Bitmap? ->
             bitmap?.let {
-                binding.imageView2.setImageBitmap(it) // Atualiza o ImageView com o Bitmap do LiveData
+                binding.imageView2.setImageBitmap(it) // Receives the new image from the Live Data
             }
         }
 
-        // Configurar o botão LOAD para abrir o PhotoPicker
+        // Load Button to PhotoPicker
         binding.buttonLoad.setOnClickListener {
             openPhotoPicker()
         }
 
-        // Configura o botão Crop para navegar para o CropFragment
+        // Crop Button to Fragment
         binding.buttonCrop.setOnClickListener {
             navigateToCropFragment()
         }
 
-        // Configurar os outros botões inferiores para navegar para o FeatureFragment
-        binding.buttonLight.setOnClickListener { navigateToFeatureFragment("LIGHT") }
+        // Light Button to Fragment
+        binding.buttonLight.setOnClickListener {
+            navigateToLightFragment()
+        }
+
+        // Other buttons go to Fragment Feature
         binding.buttonColors.setOnClickListener { navigateToFeatureFragment("COLOR") }
         binding.buttonFilters.setOnClickListener { navigateToFeatureFragment("FILTERS") }
     }
@@ -84,21 +89,30 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun navigateToFeatureFragment(featureType: String) {
-        // Passar o argumento para o FeatureFragment via NavController
+        // Nav Controller conected to Features
         val action = MainFragmentDirections.actionMainFragmentToFeatureFragment(featureType)
         findNavController().navigate(action)
     }
 
     private fun navigateToCropFragment() {
-        // Obtém a imagem do MainViewModel
         val image = viewModel.image.value
 
         if (image != null) {
-            // Converte o Bitmap em um argumento serializável
+            // Converts the Bitmap
             val action = MainFragmentDirections.actionMainFragmentToCropFragment(image)
             findNavController().navigate(action)
         } else {
-            Toast.makeText(requireContext(), "Nenhuma imagem carregada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "No image Loaded", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun navigateToLightFragment(){
+        val image = viewModel.image.value
+        if (image != null){
+            val action = MainFragmentDirections.actionMainFragmentToLightFragment(image)
+            findNavController().navigate(action)
+        } else {
+            Toast.makeText(requireContext(), "No image loaded", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -106,7 +120,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         val inputStream = requireContext().contentResolver.openInputStream(uri)
         val originalBitmap = BitmapFactory.decodeStream(inputStream)
 
-        // Corrige a orientação do bitmap com base nos metadados EXIF
+        // Corrects the orientation of the Bitmap
         val correctedBitmap = correctBitmapOrientation(uri, originalBitmap)
         return correctedBitmap
     }
@@ -138,15 +152,5 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         val rotatedBitmap =
             Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
         return rotatedBitmap
-    }
-}
-
-class MainViewModel : ViewModel() {
-    // Armazenando a imagem editada
-    private var _image: MutableLiveData<Bitmap> = MutableLiveData()
-    val image: LiveData<Bitmap> = _image
-
-    fun changeImage(bitmap: Bitmap) {
-        _image.postValue(bitmap)
     }
 }
