@@ -37,11 +37,19 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Fragment Result Listener
+        // Fragment Result Listener for Light Feature
+        parentFragmentManager.setFragmentResultListener("lightResult", this) { _, bundle ->
+            val bitmap = bundle.getParcelable<Bitmap>("editedImage")
+            if (bitmap != null) {
+                viewModel.changeImage(bitmap) // Update the image in ViewModel
+            }
+        }
+
+        // Fragment Result Listener for Crop Feature
         parentFragmentManager.setFragmentResultListener("cropResult", this) { _, bundle ->
             val bitmap = bundle.getParcelable<Bitmap>("croppedImage")
             if (bitmap != null) {
-                viewModel.changeImage(bitmap) // Receives the new (cropped) image
+                viewModel.changeImage(bitmap)
             }
         }
     }
