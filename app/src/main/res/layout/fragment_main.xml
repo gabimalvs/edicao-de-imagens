@@ -5,51 +5,58 @@
     android:layout_height="match_parent"
     tools:context=".fragments.MainFragment">
 
-    <Button
-        android:id="@+id/button_load"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:text="LOAD" />
-
-    <Button
-        android:id="@+id/button_crop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="680dp"
-        android:text="CROP" />
-
-    <Button
-        android:id="@+id/button_light"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="680dp"
-        android:text="LIGHT" />
-
-    <Button
-        android:id="@+id/button_colors"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="215dp"
-        android:layout_marginTop="680dp"
-        android:text="COLORS" />
-
-    <Button
-        android:id="@+id/button_filters"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="310dp"
-        android:layout_marginTop="680dp"
-        android:text="FILTERS" />
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:scaleType="fitCenter"
+        tools:srcCompat="@tools:sample/avatars"/>
+
+    <Button
+        android:id="@+id/button_load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOAD"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="50dp" />
+
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginBottom="50dp">
+
+        <Button
+            android:id="@+id/button_crop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="CROP" />
+
+        <Button
+            android:id="@+id/button_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="LIGHT" />
+
+        <Button
+            android:id="@+id/button_colors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="COLORS" />
+
+        <Button
+            android:id="@+id/button_filters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="FILTERS" />
+    </LinearLayout>
 
 </FrameLayout>

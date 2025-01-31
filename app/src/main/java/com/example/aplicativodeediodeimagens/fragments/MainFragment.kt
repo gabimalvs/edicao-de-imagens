@@ -52,6 +52,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 viewModel.changeImage(bitmap)
             }
         }
+
+        // Listener for Filter Feature
+        parentFragmentManager.setFragmentResultListener("filterResult", this) { _, bundle ->
+            val bitmap = bundle.getParcelable<Bitmap>("filteredImage")
+            if (bitmap != null) {
+                viewModel.changeImage(bitmap)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -87,9 +95,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             navigateToLightFragment()
         }
 
+        binding.buttonFilters.setOnClickListener {
+            navigateToFiltersFragment()
+        }
+
         // Other buttons go to Fragment Feature
         binding.buttonColors.setOnClickListener { navigateToFeatureFragment("COLOR") }
-        binding.buttonFilters.setOnClickListener { navigateToFeatureFragment("FILTERS") }
     }
 
     private fun openPhotoPicker() {
@@ -118,6 +129,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         val image = viewModel.image.value
         if (image != null){
             val action = MainFragmentDirections.actionMainFragmentToLightFragment(image)
+            findNavController().navigate(action)
+        } else {
+            Toast.makeText(requireContext(), "No image loaded", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun navigateToFiltersFragment() {
+        val image = viewModel.image.value
+        if (image != null) {
+            val action = MainFragmentDirections.actionMainFragmentToFiltersFragment(image)
             findNavController().navigate(action)
         } else {
             Toast.makeText(requireContext(), "No image loaded", Toast.LENGTH_SHORT).show()

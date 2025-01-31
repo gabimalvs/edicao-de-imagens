@@ -8,7 +8,8 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.aplicativodeediodeimagens.fragments.MainFragment"
-        android:label="@string/label_main_fragment">
+        android:label="@string/label_main_fragment"
+        tools:layout="@layout/fragment_main">
 
         <action
             android:id="@+id/action_mainFragment_to_featureFragment"
@@ -20,12 +21,16 @@
         <action
             android:id="@+id/action_mainFragment_to_lightFragment"
             app:destination="@id/lightFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_filtersFragment"
+            app:destination="@id/filtersFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/featureFragment"
         android:name="com.example.aplicativodeediodeimagens.fragments.FeatureFragment"
-        android:label="@string/label_feature_fragment">
+        android:label="@string/label_feature_fragment"
+        tools:layout="@layout/fragment_feature">
 
         <argument
             android:name="feature"
@@ -46,12 +51,24 @@
     <fragment
         android:id="@+id/lightFragment"
         android:name="com.example.aplicativodeediodeimagens.fragments.LightFragment"
-        android:label="Adjust Light">
+        android:label="Adjust Light"
+        tools:layout="@layout/fragment_light">
 
         <argument
             android:name="image"
             app:argType="android.graphics.Bitmap"/>
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/filtersFragment"
+        android:name="com.example.aplicativodeediodeimagens.fragments.FiltersFragment"
+        android:label="Filters Fragment">
+
+
+        <argument
+            android:name="image"
+            app:argType="android.graphics.Bitmap"/>
     </fragment>
 
 </navigation>
