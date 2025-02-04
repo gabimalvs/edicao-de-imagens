@@ -12,13 +12,36 @@
         android:scaleType="fitCenter"
         tools:srcCompat="@tools:sample/avatars"/>
 
-    <Button
-        android:id="@+id/button_load"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="LOAD"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="50dp" />
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginBottom="50dp">
+
+
+        <Button
+            android:id="@+id/button_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Load" />
+
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Save" />
+
+
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/buttonContainer"
@@ -45,18 +68,12 @@
             android:text="LIGHT" />
 
         <Button
-            android:id="@+id/button_colors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="COLORS" />
-
-        <Button
             android:id="@+id/button_filters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:text="FILTERS" />
+
     </LinearLayout>
 
 </FrameLayout>

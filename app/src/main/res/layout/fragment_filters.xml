@@ -11,41 +11,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@id/filterButtonsContainer"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewFilters"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/filterButtonsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="81dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp">
-
-        <Button
-            android:id="@+id/button_filter_BW"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B&amp;W" />
-
-        <Button
-            android:id="@+id/button_filter_sepia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sepia" />
-
-        <Button
-            android:id="@+id/button_filter_negative"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Negative" />
-
-    </LinearLayout>
 
     <Button
         android:id="@+id/button_save"
@@ -59,5 +28,110 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFilters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="96dp"
+        android:padding="8dp"
+        android:scrollbars="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <!--
+    <HorizontalScrollView
+        android:id="@+id/horizontal_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="524dp"
+        android:fillViewport="true"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <LinearLayout
+            android:id="@+id/filterButtonsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_filter_BW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="B&amp;W" />
+
+            <Button
+                android:id="@+id/button_filter_sepia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Sepia" />
+
+            <Button
+                android:id="@+id/button_filter_negative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Negative" />
+
+            <Button
+                android:id="@+id/button_filter_contrast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Contrast" />
+
+            <Button
+                android:id="@+id/button_filter_darken"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Darken" />
+
+            <Button
+                android:id="@+id/button_filter_cyan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Cyan" />
+
+            <Button
+                android:id="@+id/button_filter_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Blue" />
+
+            <Button
+                android:id="@+id/button_filter_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Red" />
+
+            <Button
+                android:id="@+id/button_filter_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Green" />
+
+            <Button
+                android:id="@+id/button_filter_gray_contrast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Gray Contrast" />
+        </LinearLayout>
+
+    </HorizontalScrollView>
+ -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

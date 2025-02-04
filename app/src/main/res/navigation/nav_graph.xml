@@ -63,8 +63,8 @@
     <fragment
         android:id="@+id/filtersFragment"
         android:name="com.example.aplicativodeediodeimagens.fragments.FiltersFragment"
-        android:label="Filters Fragment">
-
+        android:label="Filters Fragment"
+        tools:layout="@layout/fragment_filters">
 
         <argument
             android:name="image"

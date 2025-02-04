@@ -18,6 +18,13 @@ import com.example.aplicativodeediodeimagens.R
 import com.example.aplicativodeediodeimagens.databinding.FragmentMainBinding
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.aplicativodeediodeimagens.viewmodel.MainViewModel
+import android.content.ContentValues
+import android.content.Context
+import android.os.Environment
+import android.provider.MediaStore
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 class MainFragment : Fragment(R.layout.fragment_main) {
     private lateinit var binding: FragmentMainBinding
@@ -99,8 +106,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             navigateToFiltersFragment()
         }
 
-        // Other buttons go to Fragment Feature
-        binding.buttonColors.setOnClickListener { navigateToFeatureFragment("COLOR") }
+        binding.buttonSave.setOnClickListener {
+            val image = viewModel.image.value
+            if (image != null) {
+                saveImageToDevice(image, requireContext())
+            } else {
+                Toast.makeText(requireContext(), "No image to save", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun openPhotoPicker() {
@@ -143,6 +156,31 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         } else {
             Toast.makeText(requireContext(), "No image loaded", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun saveImageToDevice(bitmap: Bitmap, context: Context) {
+        val filename = "EditedImage_${System.currentTimeMillis()}.png"
+
+        val fos: OutputStream? = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            // Para Android 10 (API 29) ou superior
+            val contentValues = ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+            }
+            val imageUri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            imageUri?.let { context.contentResolver.openOutputStream(it) }
+        } else {
+            // Para Android 9 (API 28) ou inferior
+            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
+            val file = File(imagesDir, filename)
+            FileOutputStream(file)
+        }
+
+        fos?.use {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+            Toast.makeText(context, "Image saved successfully!", Toast.LENGTH_SHORT).show()
+        } ?: Toast.makeText(context, "Failed to save image", Toast.LENGTH_SHORT).show()
     }
 
     private fun uriToBitmap(uri: Uri): Bitmap {
