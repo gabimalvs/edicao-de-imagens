@@ -44,7 +44,7 @@ class FiltersFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        val adapter = FilterAdapter(filterNames) { filterName ->
+        val adapter = FilterAdapter(filterNames, originalBitmap!!) { filterName ->
             applyFilter(filterName)
         }
         binding.recyclerViewFilters.layoutManager =
