@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aplicativodeediodeimagens.adapter.FilterAdapter
@@ -41,6 +42,10 @@ class FiltersFragment : Fragment() {
         }
 
         setupRecyclerView()
+
+        binding.buttonSave.setOnClickListener {
+            applyAndReturn()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -112,5 +117,18 @@ class FiltersFragment : Fragment() {
         canvas.drawBitmap(originalBitmap!!, 0f, 0f, paint)
 
         binding.imageViewFilter.setImageBitmap(filteredBitmap)
+    }
+
+    // Returns to the Main Fragment
+    private fun applyAndReturn() {
+        if (filteredBitmap != null) {
+            val resultBundle = Bundle().apply {
+                putParcelable("filteredImage", filteredBitmap)
+            }
+            parentFragmentManager.setFragmentResult("filterResult", resultBundle)
+            requireActivity().onBackPressed()
+        } else {
+            Toast.makeText(requireContext(), "No filters applied", Toast.LENGTH_SHORT).show()
+        }
     }
 }
