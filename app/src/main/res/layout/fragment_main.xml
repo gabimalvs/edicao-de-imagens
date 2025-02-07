@@ -13,6 +13,13 @@
         tools:srcCompat="@tools:sample/avatars"/>
 
 
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"/>
+
+
     <LinearLayout
         android:id="@+id/button_container"
         android:layout_width="match_parent"
@@ -38,7 +45,12 @@
             android:layout_margin="4dp"
             android:text="Save" />
 
-
+        <Button
+            android:id="@+id/button_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Share" />
 
     </LinearLayout>
 
@@ -73,6 +85,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:text="FILTERS" />
+
+        <Button
+            android:id="@+id/button_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="History"
+            android:layout_marginTop="16dp"/>
 
     </LinearLayout>
 

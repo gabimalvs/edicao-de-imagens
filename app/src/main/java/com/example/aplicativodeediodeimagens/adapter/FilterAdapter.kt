@@ -26,7 +26,7 @@ class FilterAdapter(
     override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
         val filterName = filterList[position]
 
-        // Se já processamos esse filtro, usa a versão salva. Senão, cria uma nova.
+        // If it already processed this filter, it uses the saved version. If not, creates a new one.
         val filteredBitmap = filterPreviews.getOrPut(filterName) {
             applyFilter(filterName, originalBitmap.copy(Bitmap.Config.ARGB_8888, true))
         }
