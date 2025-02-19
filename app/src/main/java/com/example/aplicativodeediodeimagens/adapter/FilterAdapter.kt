@@ -1,5 +1,6 @@
 package com.example.aplicativodeediodeimagens.adapter
 
+import android.content.Context
 import android.graphics.*
 import android.view.LayoutInflater
 import android.view.View
@@ -7,15 +8,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aplicativodeediodeimagens.Cartoonizer
 import com.example.aplicativodeediodeimagens.R
+import kotlinx.coroutines.*
 
 class FilterAdapter(
+    private val context: Context,
     private val filterList: List<String>,
     private val originalBitmap: Bitmap,
     private val onFilterSelected: (String) -> Unit
 ) : RecyclerView.Adapter<FilterAdapter.FilterViewHolder>() {
 
     private val filterPreviews: MutableMap<String, Bitmap> = mutableMapOf()
+    private val cartoonizer = Cartoonizer(context) //Created the Cartoon Instance
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -28,7 +33,15 @@ class FilterAdapter(
 
         // If it already processed this filter, it uses the saved version. If not, creates a new one.
         val filteredBitmap = filterPreviews.getOrPut(filterName) {
-            applyFilter(filterName, originalBitmap.copy(Bitmap.Config.ARGB_8888, true))
+            if (filterName == "Cartoon") {
+                runBlocking {
+                    withContext(Dispatchers.Default){
+                        cartoonizer.processImage(originalBitmap)
+                    }
+                }
+            } else{
+                applyFilter(filterName, originalBitmap.copy(Bitmap.Config.ARGB_8888, true))
+            }
         }
 
         holder.bind(filterName, filteredBitmap)
@@ -113,6 +126,8 @@ class FilterAdapter(
                 ))
                 colorMatrix.postConcat(contrastMatrix)
             }
+
+            "Cartoon" -> return cartoonizer.processImage(bitmap)
         }
 
         val paint = Paint()

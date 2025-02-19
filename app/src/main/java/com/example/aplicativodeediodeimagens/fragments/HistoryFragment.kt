@@ -1,6 +1,7 @@
 package com.example.aplicativodeediodeimagens.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,12 +41,15 @@ class HistoryFragment : Fragment() {
         binding.recyclerViewHistory.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewHistory.adapter = adapter
 
-        // Shows the ROOM's History
         viewModel.getAllPhotos { photos ->
             if (photos.isNotEmpty()) {
                 adapter.updateData(photos)
+
+
+                Log.d("HistoryFragment", "Dados carregados do banco: ${photos.size} imagens")
             } else {
-                Toast.makeText(requireContext(), "History Empty!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Histórico vazio!", Toast.LENGTH_SHORT).show()
+                Log.d("HistoryFragment", "Nenhuma imagem carregada do banco.")
             }
         }
 

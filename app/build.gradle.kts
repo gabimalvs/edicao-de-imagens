@@ -12,6 +12,10 @@ android {
     namespace = "com.example.aplicativodeediodeimagens"
     compileSdk = 34
 
+    aaptOptions{
+        noCompress.add("tflite")
+    }
+
     defaultConfig {
         applicationId = "com.example.aplicativodeediodeimagens"
         minSdk = 24
@@ -41,6 +45,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        mlModelBinding = true
     }
 }
 
@@ -146,9 +151,16 @@ dependencies {
 }
 
 dependencies {
+    implementation(libs.tensorflow.lite.support)
+    implementation(libs.tensorflow.lite.gpu)
+    implementation(libs.tensorflow.lite.metadata)
+
     val room_version = "2.5.2"
 
     ksp("androidx.room:room-compiler:2.5.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    ksp ("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation ("androidx.room:room-runtime:$room_version")
     annotationProcessor ("androidx.room:room-compiler:$room_version")

@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -105,18 +106,24 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun saveCurrentImage() {
         val image = viewModel.image.value
         if (image != null) {
-            val path = saveImageToDevice(image, requireContext()) // Image's Path
-            if (path != null) {
-                val history = PhotoHistory(imagePath = path.toString(), creationDate = System.currentTimeMillis())
+            val path = saveImageToDevice(image, requireContext())
+
+            if (!path.isNullOrEmpty()) {
+                val history = PhotoHistory(imagePath = path, creationDate = System.currentTimeMillis())
                 historyViewModel.insertPhoto(history)
 
-                // Debug: Check if the images are being saved
-                Toast.makeText(requireContext(), "Image saved in History!", Toast.LENGTH_SHORT).show()
+                Log.d("MainFragment", "Imagem salva no banco: $path")
+
+                Toast.makeText(requireContext(), "Image saved in History.", Toast.LENGTH_SHORT).show()
+            } else {
+                Log.e("MainFragment", "Erro ao salvar a imagem, caminho inválido!")
+                Toast.makeText(requireContext(), "Error in saving the image.", Toast.LENGTH_SHORT).show()
             }
         } else {
             Toast.makeText(requireContext(), "No image to save.", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private val historyViewModel: PhotoHistoryViewModel by viewModels {
         PhotoHistoryViewModelFactory(PhotoHistoryRepository(AppDatabase.getDatabase(requireContext()).photoHistoryDao()))
@@ -210,27 +217,24 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     //Saving the image in the Gallery
-    private fun saveImageToDevice(bitmap: Bitmap, context: Context) {
+    private fun saveImageToDevice(bitmap: Bitmap, context: Context): String? {
         val filename = "EditedImage_${System.currentTimeMillis()}.png"
+        val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), filename)
 
-        val fos: OutputStream? = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            val contentValues = ContentValues().apply {
-                put(MediaStore.Images.Media.DISPLAY_NAME, filename)
-                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
-            }
-            val imageUri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-            imageUri?.let { context.contentResolver.openOutputStream(it) }
-        } else {
-            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
-            val file = File(imagesDir, filename)
-            FileOutputStream(file)
+        return try {
+            val fos = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+            fos.flush()
+            fos.close()
+
+            // Log para verificar se o caminho real da imagem foi salvo corretamente
+            Log.d("saveImageToDevice", "Imagem salva em: ${file.absolutePath}")
+
+            file.absolutePath // Retorna o caminho correto
+        } catch (e: Exception) {
+            Log.e("saveImageToDevice", "Erro ao salvar imagem: ${e.message}")
+            null
         }
-
-        fos?.use {
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
-            Toast.makeText(context, "Image saved!", Toast.LENGTH_SHORT).show()
-        } ?: Toast.makeText(context, "Failed to save image", Toast.LENGTH_SHORT).show()
     }
 
     private fun uriToBitmap(uri: Uri): Bitmap {
